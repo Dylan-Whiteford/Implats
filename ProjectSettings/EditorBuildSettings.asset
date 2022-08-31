@@ -12,10 +12,10 @@ EditorBuildSettings:
     path: Assets/_Scenes/Pre-Production_Refuge Chamber_Old.unity
     guid: 429d4891274cf1149b97a4db9de561cf
   - enabled: 1
-    path: Assets/_Scenes/Pre-Production_Graphics.unity
+    path: Assets/Scenes/Pre-Production_Graphics.unity
     guid: e6ef616c6450d68429e419ecebba7161
   - enabled: 0
-    path: Assets/_Scenes/Dylan/PlayGround.unity
+    path: Assets/Scenes/Dylan/PlayGround.unity
     guid: 7babc1a1b584efa47877630acfdf239a
   - enabled: 1
     path: Assets/Scenes/Pre-Production_Refuge Chamber.unity
