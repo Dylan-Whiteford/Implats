@@ -7,10 +7,15 @@ using NaughtyAttributes;
 using UnityEngine.Serialization;
 
 namespace Autohand {
+
+
+
     [RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(CapsuleCollider)), DefaultExecutionOrder(-3)]
     [HelpURL("https://earnestrobot.notion.site/Auto-Move-Player-02d91305a4294e039049bd45cacc5b90")]
     public class AutoHandPlayer : MonoBehaviour {
-
+        // DYLANS VARS ======================================= //
+        private volatile bool isFading = false;
+        // =================================================== //
         static bool notFound = false;
         public static AutoHandPlayer _Instance;
         public static AutoHandPlayer Instance {
@@ -465,15 +470,20 @@ namespace Autohand {
                 var targetPos = transform.position - headCamera.transform.position; targetPos.y = 0;
                 targetPosOffset = Vector3.MoveTowards(targetPosOffset, targetPos, body.velocity.magnitude * deltaTime * 2);
                 trackingContainer.position += targetPosOffset;
-
+//==========================================================================================================================================================================================//
+// Altered
                 if(headPhysicsFollower != null) {
                     //Keeps the head down when colliding something above it and manages bouncing back up when not
                     if(Vector3.Distance(headCamera.transform.position, headPhysicsFollower.transform.position) > headPhysicsFollower.headCollider.radius / 1.5f) {
                         var idealPos = headPhysicsFollower.transform.position + (headCamera.transform.position - headPhysicsFollower.transform.position).normalized * headPhysicsFollower.headCollider.radius / 1.5f;
                         var offsetPos = headCamera.transform.position - idealPos;
                         trackingContainer.position -= offsetPos;
+                        if(!isFading)
+                            StartCoroutine(fadeAnimation());
                     }
+                    else isFading = false;
                 }
+//==========================================================================================================================================================================================//
 
                 //This helps prevent the hands from clipping
                 var deltaHandPos = handRight.transform.position - startRightHandPos;
@@ -497,9 +507,45 @@ namespace Autohand {
             lastUpdatePosition = transform.position;
             lastUpdateTime = Time.realtimeSinceStartup;
         }
+//==========================================================================================================================================================================================//
+// Added
+        
+        /**
+         * <summary>
+         * fade animation for a red screen with vibration
+         * </summary>
+         * <returns></returns>
+         */
+        private IEnumerator fadeAnimation(){
+            if(!isFading){
+                isFading = true;
+                // wait buffer
+                yield return new WaitForSeconds(0.1f);
 
+                // get the fader and intialize it
+                OVRScreenFade fader = headCamera.GetComponent<OVRScreenFade>();
+                fader.fadeColor =  new Color(0.695f,0.01f,0f,0.5f);
+                fader.fadeTime = 0.1f;
 
+                // quick fade then unfade
+                yield return fader.Fade(0f,0.5f);
 
+                handLeft.PlayHapticVibration();
+                handRight.PlayHapticVibration();
+
+                while(isFading) yield return  new WaitForSeconds(0.1f);
+                
+                fader.fadeTime = 0.5f;
+                yield return fader.Fade(0.5f,0f);
+               
+                // set fader back to default
+                fader.fadeColor =  new Color(0.0f,0.0f,0.0f,1.0f);
+                fader.fadeTime = 0.3f;
+                
+                isFading = false;
+            }
+        }
+//==========================================================================================================================================================================================//
         protected virtual void UpdateTurn(float deltaTime) {
 
             //Snap turning
