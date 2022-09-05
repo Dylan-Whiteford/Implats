@@ -228,43 +228,43 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Teleport(Transform target)
-    {
-        /*Player.instance.transform.position = target.position;
-        Player.instance.transform.rotation = target.rotation;
-        return;*/
+    // public void Teleport(Transform target)
+    // {
+    //     /*Player.instance.transform.position = target.position;
+    //     Player.instance.transform.rotation = target.rotation;
+    //     return;*/
 
-        if (tranQuest_Player && tranTracking_offset && tranCenterEyeTracking)
-        {
-            Vector3 nPosition;
-            RaycastHit hit;
-            if (false && Physics.Raycast(target.position, target.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
-            {
-                nPosition = hit.point;
-                Debug.Log("Teleport Target Hit: " + hit.collider.gameObject.name + " (" + target.gameObject.name + ")");
-            }
-            else
-                nPosition = target.position;
+    //     if (tranQuest_Player && tranTracking_offset && tranCenterEyeTracking)
+    //     {
+    //         Vector3 nPosition;
+    //         RaycastHit hit;
+    //         if (false && Physics.Raycast(target.position, target.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
+    //         {
+    //             nPosition = hit.point;
+    //             Debug.Log("Teleport Target Hit: " + hit.collider.gameObject.name + " (" + target.gameObject.name + ")");
+    //         }
+    //         else
+    //             nPosition = target.position;
 
-            transform.position = nPosition;
-            autoHandPlayer.SetPosition(nPosition);
-            //Player.instance.transform.position = nPosition;            
-            //Player.instance.transform.rotation = transform.rotation;
-            tranTracking_offset.rotation = target.rotation;
-            return;
+    //         transform.position = nPosition;
+    //         autoHandPlayer.SetPosition(nPosition);
+    //         //Player.instance.transform.position = nPosition;            
+    //         //Player.instance.transform.rotation = transform.rotation;
+    //         tranTracking_offset.rotation = target.rotation;
+    //         return;
 
 
-            transform.position = nPosition;            
-            tranTracking_offset.rotation = target.rotation;
+    //         transform.position = nPosition;            
+    //         tranTracking_offset.rotation = target.rotation;
 
-            if (fader)
-                fader.FadeIn();
-        }
-        else
-            Debug.LogError("Do not have all required components for teleporting");
-        //teleport_Offset.localPosition = Vector3.zero;
-        //teleport_Offset.rotation = newPosition.rotation;
-    }
+    //         if (fader)
+    //             fader.FadeIn();
+    //     }
+    //     else
+    //         Debug.LogError("Do not have all required components for teleporting");
+    //     //teleport_Offset.localPosition = Vector3.zero;
+    //     //teleport_Offset.rotation = newPosition.rotation;
+    // }
 
 
     public void EquipPPE(int i, bool flag)
