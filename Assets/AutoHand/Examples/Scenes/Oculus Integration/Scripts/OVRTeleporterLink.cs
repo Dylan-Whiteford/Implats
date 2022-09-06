@@ -10,14 +10,19 @@ namespace Autohand.Demo{
         bool aiming = false;
 
         public void FixedUpdate() {
-            if(!aiming && OVRInput.Get(teleportButton, controller)) {
-                aiming = true;
-                teleport.StartTeleport();
-            }
-
-            if(aiming && !OVRInput.Get(teleportButton, controller)) {
+            if(!(AutoHandPlayer.Instance.isColliding)){
+                if(!aiming && OVRInput.Get(teleportButton, controller)) {                 
+                        aiming = true;
+                        teleport.StartTeleport();
+                }
+                if(aiming && !OVRInput.Get(teleportButton, controller)) {
+                    aiming = false;
+                    teleport.Teleport();
+                }
+            }  
+            else{
                 aiming = false;
-                teleport.Teleport();
+                teleport.CancelTeleport();
             }
         }
     }
