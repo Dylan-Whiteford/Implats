@@ -148,8 +148,9 @@ namespace Autohand{
         }
 
         public void StartTeleport(){
-            aiming = true;
-            OnStartTeleport?.Invoke();
+                aiming = true;
+                OnStartTeleport?.Invoke();
+    
         }
 
         public void CancelTeleport(){
@@ -178,7 +179,7 @@ namespace Autohand{
 
                 //===========================================DYLAN=================================================================//
 
-                
+
                 LocationNodeManager.Instance.updateLastTeleport(
                     aimHit.transform.gameObject.GetComponent<LocationNode>()
                 );

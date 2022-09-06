@@ -14,7 +14,7 @@ namespace Autohand {
     [HelpURL("https://earnestrobot.notion.site/Auto-Move-Player-02d91305a4294e039049bd45cacc5b90")]
     public class AutoHandPlayer : MonoBehaviour {
         // DYLANS VARS ======================================= //
-        private volatile bool isFading = false;
+        public volatile bool isColliding = false;
         // =================================================== //
         static bool notFound = false;
         public static AutoHandPlayer _Instance;
@@ -478,10 +478,10 @@ namespace Autohand {
                         var idealPos = headPhysicsFollower.transform.position + (headCamera.transform.position - headPhysicsFollower.transform.position).normalized * headPhysicsFollower.headCollider.radius / 1.5f;
                         var offsetPos = headCamera.transform.position - idealPos;
                         trackingContainer.position -= offsetPos;
-                        if(!isFading)
+                        if(!isColliding)
                             StartCoroutine(fadeAnimation());
                     }
-                    else isFading = false;
+                    else isColliding = false;
                 }
 //==========================================================================================================================================================================================//
 
@@ -517,8 +517,8 @@ namespace Autohand {
          * <returns></returns>
          */
         private IEnumerator fadeAnimation(){
-            if(!isFading){
-                isFading = true;
+            if(!isColliding){
+                isColliding = true;
                 // wait buffer
                 yield return new WaitForSeconds(0.1f);
 
@@ -533,7 +533,7 @@ namespace Autohand {
                 handLeft.PlayHapticVibration(0.2f);
                 handRight.PlayHapticVibration(0.2f);
 
-                while(isFading) yield return  new WaitForSeconds(0.1f);
+                while(isColliding) yield return  new WaitForSeconds(0.1f);
                 
                 fader.fadeTime = 0.5f;
                 yield return fader.Fade(0.5f,0f);
@@ -542,7 +542,7 @@ namespace Autohand {
                 fader.fadeColor =  new Color(0.0f,0.0f,0.0f,1.0f);
                 fader.fadeTime = 0.3f;
                 
-                isFading = false;
+                isColliding = false;
             }
         }
 //==========================================================================================================================================================================================//
