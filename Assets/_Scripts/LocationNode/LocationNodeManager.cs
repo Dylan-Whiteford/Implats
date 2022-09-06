@@ -26,7 +26,8 @@ public class LocationNodeManager : MonoBehaviour
         } 
         else 
         { 
-            Instance = this; 
+            Instance = this;    
+            hidePanelNodes();
         } 
     }
 
