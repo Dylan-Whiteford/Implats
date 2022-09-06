@@ -176,7 +176,15 @@ namespace Autohand{
                     }
                 }
 
+                //===========================================DYLAN=================================================================//
+
+                
+                LocationNodeManager.Instance.updateLastTeleport(
+                    aimHit.transform.gameObject.GetComponent<LocationNode>()
+                );
                 StartCoroutine(fadeAnimation());
+
+                //===========================================DYLAN=================================================================//
                 
                 OnTeleport?.Invoke();
 
@@ -193,24 +201,9 @@ namespace Autohand{
 
         /**
          * <summary>
-         *  - coroutine to animate the teleport function
+         *  - coroutine to fade animate the teleport function
          * </summary>
-         * <param name="frames">
-         *  - smoothness of the translation
-         * </param> 
-         * <param name="dir">
-         *  - direction headed
-         * </param>
-         * <returns></returns>
-         */
-        // private IEnumerator walkLoop(int count, Vector3 dir)
-        // {
-        //     print(dir * (float) ((count+1)/10));
-        //     playerBody?.transform.Translate(dir * (float) ((count+1)/10));
-        //     yield return new WaitForSeconds(MovementDelay);
-        //     if(count < 10) yield return StartCoroutine(walkLoop( count+1,  dir));
-        // }
-
+        **/
         private IEnumerator fadeAnimation(){
                 yield return playerBody.headCamera.GetComponent<OVRScreenFade>().Fade(0f,1f);
                 yield return new WaitForSeconds(0.35f);

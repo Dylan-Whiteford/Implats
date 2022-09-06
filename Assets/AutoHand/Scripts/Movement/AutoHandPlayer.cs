@@ -530,8 +530,8 @@ namespace Autohand {
                 // quick fade then unfade
                 yield return fader.Fade(0f,0.5f);
 
-                handLeft.PlayHapticVibration();
-                handRight.PlayHapticVibration();
+                handLeft.PlayHapticVibration(0.2f);
+                handRight.PlayHapticVibration(0.2f);
 
                 while(isFading) yield return  new WaitForSeconds(0.1f);
                 

@@ -96,11 +96,22 @@ namespace Autohand{
             }
         }
 
+        /**
+         * <summary>
+         * fade animation that teleports the user infront of the ladder
+         * </summary>
+         */
         private IEnumerator fadeAnimation(){
                 yield return player.headCamera.GetComponent<OVRScreenFade>().Fade(0f,1f);
                 yield return new WaitForSeconds(0.35f);
                 Vector3 toPos = new Vector3(upLoc.position.x,upLoc.position.y,upLoc.position.z);
+
+                // teleport user
                 player.SetPosition(toPos);
+
+                // reveal the panel nodes
+                LocationNodeManager.Instance.showPanelNodes();
+
                 yield return new WaitForSeconds(0.35f);
                 yield return player.headCamera.GetComponent<OVRScreenFade>().Fade(1f,0f);
                
