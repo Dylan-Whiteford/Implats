@@ -23,7 +23,7 @@ namespace Autohand{
         * - initialize state
         * </summary>
         */
-        void Start()
+        void Awake()
         {
             wait = 0.0f;
             activeGrabs = 0;
@@ -37,6 +37,7 @@ namespace Autohand{
          */
         void Update()
         {
+            
             if(activeGrabs==2){
                 wait += Time.deltaTime;
                 // wait a second and then check state again
