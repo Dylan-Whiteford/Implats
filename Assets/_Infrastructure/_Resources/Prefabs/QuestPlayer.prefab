@@ -5293,8 +5293,6 @@ MonoBehaviour:
   tranOVRCameraRig: {fileID: 8950901032605215290}
   tranTrackingSpace: {fileID: 7837718201053705303}
   tranCenterEyeTracking: {fileID: 2929572387205658635}
-  autoHandPlayer: {fileID: 4828460121462146370}
-  fader: {fileID: 6813607831837093282}
 --- !u!1 &4828460120671621545
 GameObject:
   m_ObjectHideFlags: 0

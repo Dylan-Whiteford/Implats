@@ -4,13 +4,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+namespace Autohand{
 public class SceneSelector : MonoBehaviour
 {
+
+
 
     // Singleton
     private SceneSelector Instance;
 
     public OVRScreenFade Fader;
+
+    public AutoHandPlayer ahp;
 
     // Buttons from the scene selector canvas
     public Button A;
@@ -18,6 +23,20 @@ public class SceneSelector : MonoBehaviour
     public Button C;
     // the active scene
     private int activeScene;
+
+    // Unity Controls
+    [ContextMenu("A Button")]
+    private void Abutton(){
+        StartCoroutine(setScene(0));
+    }
+    [ContextMenu("B Button")]
+    private void Bbutton(){
+        StartCoroutine(setScene(1));
+    }
+    [ContextMenu("C Button")]
+    private void Cbutton(){
+        StartCoroutine(setScene(2));
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -30,14 +49,13 @@ public class SceneSelector : MonoBehaviour
         else 
         { 
             Instance = this; 
-            activeScene = 0;
+            activeScene = -1;
 
             if(A && B && C){
                 A.onClick.AddListener(delegate{ StartCoroutine(setScene(0)); });
                 B.onClick.AddListener(delegate{ StartCoroutine(setScene(1)) ; });
                 C.onClick.AddListener(delegate{ StartCoroutine(setScene(2)); });
             }
-            Fader.FadeIn();
         } 
     }
 
@@ -49,7 +67,7 @@ public class SceneSelector : MonoBehaviour
 
     public IEnumerator setScene(int ss){
         // check if the scene is changing
-       // if(activeScene!=ss){
+        if(activeScene!=ss){
             activeScene = ss;
 
             //checked if scene is int range of available scenes
@@ -68,13 +86,17 @@ public class SceneSelector : MonoBehaviour
 
                 // change scene
                 activeScene = ss;
+                ahp.useGrounding=false;
+                yield return new WaitForFixedUpdate();
+                ahp.gameObject.GetComponent<Rigidbody>().useGravity = false;
                 yield return Fader.Fade(0f,1f);
                 SceneManager.LoadScene(Scene);
 
                 yield return null;
             }
-       // }
+        }
 
     }
 
+}
 }

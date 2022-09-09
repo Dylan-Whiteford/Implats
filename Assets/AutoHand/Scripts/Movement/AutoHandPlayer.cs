@@ -169,7 +169,7 @@ namespace Autohand {
 
 
 
-        public virtual void Start() {
+        public virtual void Awake() {
             startRot = headCamera.transform.rotation;
             lastUpdatePosition = transform.position;
 

@@ -37,6 +37,7 @@ namespace Autohand
 
         void OnEnable()
         {
+            print("oi its enabled");
             if (cam == null)
             {
                 cam = new GameObject("Camera Canvas Pointer (I AM CREATED AT RUNTIME FOR UI CANVAS INTERACTION, I AM NOT RENDERING ANYTHING, I AM NOT CREATING ADDITIONAL OVERHEAD)").AddComponent<Camera>();
@@ -57,9 +58,14 @@ namespace Autohand
                         canvas.worldCamera = cam;
             }
 
+
             lineRenderer.positionCount = (int)lineSegements;
-            if (inputModule.Instance != null)
+            if (inputModule.Instance != null){
                 pointerIndex = inputModule.Instance.AddPointer(this);
+            }
+            DontDestroyOnLoad(cam);
+            DontDestroyOnLoad(inputModule.Instance);
+            
         }
 
         void OnDisable()
@@ -101,6 +107,7 @@ namespace Autohand
 
         private void Awake()
         {
+
             if (lineRenderer == null)
                 gameObject.CanGetComponent(out lineRenderer);
 
@@ -120,7 +127,10 @@ namespace Autohand
                     inputModule = system.gameObject.AddComponent<AutoInputModule>();
                     inputModule.transform.parent = AutoHandExtensions.transformParent;
                 }
+
+                print("oi its not null");
             }
+            else print("oi its null"); 
         }
 
         private void Update()
@@ -176,6 +186,8 @@ namespace Autohand
                     lineRenderer.SetPosition(i, Vector3.Lerp(transform.position, endPosition, i/ lineSegements));
                 }
             }
+
+            
         }
 
         private RaycastHit CreateRaycast(float dist)
