@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
         // find spawnpoint an place the user therr
         GameObject spawnpoint = GameObject.FindGameObjectWithTag("StartLocation");
         ahp.SetPosition(spawnpoint.transform.position);
+        ahp.SetRotation(spawnpoint.transform.rotation);
         print(spawnpoint.transform.position);
         
         ahp.useGrounding=true;
@@ -127,14 +128,6 @@ public class Player : MonoBehaviour
         if (refresh_I != null)
             StopCoroutine(refresh_I);
     }
-
-    // private void SessionRefreshed(string info)
-    // {
-    //     if (shouldRefresh)
-    //     {
-    //         Invites.instance.ParseInvites(info);
-    //     }
-    // }
 
     private void SessionNotRefreshed(string info)
     {

@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Autohand
+{
+    
+
 public class LocationNodeManager : MonoBehaviour
 {
     // singleton
@@ -118,4 +122,5 @@ public class LocationNodeManager : MonoBehaviour
         checkForPanel();
     }
 
+}
 }

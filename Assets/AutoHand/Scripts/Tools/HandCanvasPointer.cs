@@ -65,12 +65,13 @@ namespace Autohand
             }
             DontDestroyOnLoad(cam);
             DontDestroyOnLoad(inputModule.Instance);
+            DontDestroyOnLoad(this);
             
         }
 
         void OnDisable()
         {
-            if(inputModule) inputModule.Instance?.RemovePointer(this);
+            //if(inputModule) inputModule.Instance?.RemovePointer(this);
         }
 
         public void SetIndex(int index)
