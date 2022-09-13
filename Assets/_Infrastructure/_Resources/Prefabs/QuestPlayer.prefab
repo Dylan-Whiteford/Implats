@@ -8233,19 +8233,23 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 4672853117214809381}
+    m_TransformParent: {fileID: 876273070238597416}
     m_Modifications:
     - target: {fileID: 3189517785069784449, guid: 550b13c7ab5987948bb95292d813fbde, type: 3}
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3189517785069784449, guid: 550b13c7ab5987948bb95292d813fbde, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3189517785069784449, guid: 550b13c7ab5987948bb95292d813fbde, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.38705668
       objectReference: {fileID: 0}
     - target: {fileID: 3189517785069784449, guid: 550b13c7ab5987948bb95292d813fbde, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04
+      value: 0.040000036
       objectReference: {fileID: 0}
     - target: {fileID: 3189517785069784449, guid: 550b13c7ab5987948bb95292d813fbde, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8322,8 +8326,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleport: {fileID: 5685472248546643077}
-  controller: 66
-  teleportButton: 98320
+  controller: 33
+  teleportButton: 98368
 --- !u!1001 &1584639897976258397
 PrefabInstance:
   m_ObjectHideFlags: 0

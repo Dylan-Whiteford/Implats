@@ -91,7 +91,6 @@ namespace Autohand{
         private void stateCheck(){
             //check for crouch
             setCrouch();
-            print (player.headCamera.transform.position.y);
             if(crouched && activeGrabs==2){
                 //initiate teleport
                 StartCoroutine(fadeAnimation());
