@@ -73,7 +73,7 @@ namespace Autohand{
         */
         public void setCrouch(){
             if(player){
-                if (player.headCamera.transform.position.y<0.35){
+                if (player.headCamera.transform.position.y<0.30){
                     crouched=true;
                 }
                 else{
