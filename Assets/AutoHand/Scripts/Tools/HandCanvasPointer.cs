@@ -35,7 +35,7 @@ namespace Autohand
 
         int pointerIndex;
 
-        void OnEnable()
+        public void OnEnable()
         {
             print("oi its enabled");
             if (cam == null)
@@ -52,7 +52,7 @@ namespace Autohand
                 cam.enabled = false;
                 cam.fieldOfView = 0.00001f;
                 cam.transform.parent = AutoHandExtensions.transformParent;
-
+                DontDestroyOnLoad(cam);
                 foreach (var canvas in FindObjectsOfType<Canvas>(true))
                     if(canvas.renderMode == RenderMode.WorldSpace)
                         canvas.worldCamera = cam;
@@ -62,16 +62,16 @@ namespace Autohand
             lineRenderer.positionCount = (int)lineSegements;
             if (inputModule.Instance != null){
                 pointerIndex = inputModule.Instance.AddPointer(this);
+            
             }
-            DontDestroyOnLoad(cam);
-            DontDestroyOnLoad(inputModule.Instance);
-            DontDestroyOnLoad(this);
+            
             
         }
 
         void OnDisable()
         {
-            //if(inputModule) inputModule.Instance?.RemovePointer(this);
+            // Handle the UI events
+            if(inputModule) inputModule.ProcessRelease(pointerIndex);
         }
 
         public void SetIndex(int index)

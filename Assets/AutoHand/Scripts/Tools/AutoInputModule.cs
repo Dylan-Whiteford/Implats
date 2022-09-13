@@ -26,9 +26,10 @@ namespace Autohand
                     {
                         _instance = new GameObject().AddComponent<AutoInputModule>();
                         _instance.transform.parent = AutoHandExtensions.transformParent;
+                        
                     }
                 }
-
+                DontDestroyOnLoad(_instance.gameObject);
                 return _instance;
             }
         }

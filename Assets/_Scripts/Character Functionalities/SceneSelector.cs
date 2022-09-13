@@ -8,8 +8,6 @@ namespace Autohand{
 public class SceneSelector : MonoBehaviour
 {
 
-
-
     // Singleton
     private SceneSelector Instance;
 
@@ -41,10 +39,11 @@ public class SceneSelector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         //singleton check
         if (Instance != null && Instance != this) 
         { 
-            Destroy(this); 
+            Destroy(this.gameObject); 
         } 
         else 
         { 
@@ -57,12 +56,6 @@ public class SceneSelector : MonoBehaviour
                 C.onClick.AddListener(delegate{ StartCoroutine(setScene(2)); });
             }
         } 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public IEnumerator setScene(int ss){
@@ -90,11 +83,22 @@ public class SceneSelector : MonoBehaviour
                 yield return new WaitForFixedUpdate();
                 ahp.gameObject.GetComponent<Rigidbody>().useGravity = false;
                 yield return Fader.Fade(0f,1f);
-                SceneManager.LoadScene(Scene);
-
+                yield return LoadYourAsyncScene(Scene ) ;
                 yield return null;
             }
         }
+
+        IEnumerator LoadYourAsyncScene(string s){
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(s); // change "YourSceneName" with the scene you want to load
+
+            // wait until the scene fully loads
+            while (!asyncLoad.isDone)
+            {
+                
+                yield return null;
+            }
+
+        }   
 
     }
 
