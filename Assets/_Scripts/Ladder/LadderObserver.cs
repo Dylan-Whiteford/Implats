@@ -25,6 +25,7 @@ namespace Autohand{
         */
         void Awake()
         {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<AutoHandPlayer>();
             wait = 0.0f;
             activeGrabs = 0;
             crouched = false;
@@ -72,7 +73,7 @@ namespace Autohand{
         */
         public void setCrouch(){
             if(player){
-                if (player.headCamera.transform.position.y<0.75){
+                if (player.headCamera.transform.position.y<0.30){
                     crouched=true;
                 }
                 else{
@@ -90,7 +91,6 @@ namespace Autohand{
         private void stateCheck(){
             //check for crouch
             setCrouch();
-                print (player.headCamera.transform.position.y);
             if(crouched && activeGrabs==2){
                 //initiate teleport
                 StartCoroutine(fadeAnimation());

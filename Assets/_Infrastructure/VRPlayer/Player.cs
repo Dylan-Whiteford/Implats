@@ -4,15 +4,42 @@ using UnityEngine;
 using Autohand;
 using Normal.Realtime;
 using System;
+using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     public static Player instance;
     private void Awake()
     {
-        if (!instance)
+
+        // check if player already exists
+        if (!instance){
             instance = this;
+            transform.parent = null;
+            DontDestroyOnLoad(this.gameObject);
+
+        }
         else
-            Debug.LogError("There is more than one instance of Player in this scene");
+        {
+            Debug.Log("There is more than one instance of Player in this scene");
+            Destroy(this.gameObject);
+        }
+
+        SceneManager.sceneLoaded += sceneLoader;
+
+
+    }
+
+    private void sceneLoader(Scene scene, LoadSceneMode mode){
+        // find spawnpoint an place the user therr
+        GameObject spawnpoint = GameObject.FindGameObjectWithTag("StartLocation");
+        ahp.SetPosition(spawnpoint.transform.position);
+        ahp.SetRotation(spawnpoint.transform.rotation);
+        print(spawnpoint.transform.position);
+        
+        ahp.useGrounding=true;
+        ahp.gameObject.GetComponent<Rigidbody>().useGravity = true;
+        Fader.FadeIn();
+        
     }
 
     [Header("Player Info")]
@@ -64,28 +91,16 @@ public class Player : MonoBehaviour
         return user_type_id < 3;
     }
 
+    public AutoHandPlayer ahp;
+    public OVRScreenFade Fader;
     IEnumerator refresh_I;
     bool shouldRefresh = false;
 
     public void StartRefresher()
     {
-        //Debug.Log("Refreshing: " + "1");
-        // refresh_I = Refresh_I();
-        // StartCoroutine(refresh_I);
     }
 
-    // IEnumerator Refresh_I()
-    // {
-    //     shouldRefresh = true;
-    //     WWWForm www = new WWWForm();
-    //     www.AddField("user_id", id);
-    //     WaitForSeconds wait = new WaitForSeconds(5);
-    //     while (shouldRefresh)
-    //     {            
-    //         yield return wait;
-    //         yield return Api.instance.RefreshSession_I(www, SessionRefreshed, SessionNotRefreshed);
-    //     }
-    // }
+
 
     private void Start()
     {
@@ -114,26 +129,9 @@ public class Player : MonoBehaviour
             StopCoroutine(refresh_I);
     }
 
-    // private void SessionRefreshed(string info)
-    // {
-    //     if (shouldRefresh)
-    //     {
-    //         Invites.instance.ParseInvites(info);
-    //     }
-    // }
-
     private void SessionNotRefreshed(string info)
     {
         Debug.Log("Session NOT Refreshed: " + info);
-    }
-
-    public void ToggleMovement(bool flag)
-    {
-        AutoHandPlayer ahp = GetComponentInChildren<AutoHandPlayer>();
-        if (ahp)
-        {
-            ahp.useMovement = flag;
-        }
     }
 
 }

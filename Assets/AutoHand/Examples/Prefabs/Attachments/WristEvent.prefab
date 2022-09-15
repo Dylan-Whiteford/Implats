@@ -812,7 +812,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &8858651399861384400
 RectTransform:
@@ -912,6 +912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b1c29d9dd2777498e1cacca5127b02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Fader: {fileID: 0}
   A: {fileID: 2155776572645165279}
   B: {fileID: 1410588366604509993}
   C: {fileID: 8858651399630967765}

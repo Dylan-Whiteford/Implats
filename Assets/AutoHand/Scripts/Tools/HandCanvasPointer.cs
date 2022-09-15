@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace Autohand
 {
+
     public class HandCanvasPointer : MonoBehaviour
     {
         [Header("References")]
@@ -35,8 +36,9 @@ namespace Autohand
 
         int pointerIndex;
 
-        void OnEnable()
+        public void OnEnable()
         {
+            print("oi its enabled");
             if (cam == null)
             {
                 cam = new GameObject("Camera Canvas Pointer (I AM CREATED AT RUNTIME FOR UI CANVAS INTERACTION, I AM NOT RENDERING ANYTHING, I AM NOT CREATING ADDITIONAL OVERHEAD)").AddComponent<Camera>();
@@ -50,21 +52,29 @@ namespace Autohand
                 cam.allowHDR = false;
                 cam.enabled = false;
                 cam.fieldOfView = 0.00001f;
-                cam.transform.parent = AutoHandExtensions.transformParent;
-
+                //cam.transform.parent = AutoHandExtensions.transformParent;
+                cam.transform.parent = null;
+                DontDestroyOnLoad(cam);
                 foreach (var canvas in FindObjectsOfType<Canvas>(true))
                     if(canvas.renderMode == RenderMode.WorldSpace)
                         canvas.worldCamera = cam;
             }
 
+
             lineRenderer.positionCount = (int)lineSegements;
-            if (inputModule.Instance != null)
+            if (inputModule.Instance != null){
+                inputModule.Instance.RemovePointer(this);
                 pointerIndex = inputModule.Instance.AddPointer(this);
+            
+            }
+            
+            
         }
 
         void OnDisable()
         {
-            if(inputModule) inputModule.Instance?.RemovePointer(this);
+            print("oi its disabled");
+            inputModule.Instance.RemovePointer(this);
         }
 
         public void SetIndex(int index)
@@ -101,6 +111,7 @@ namespace Autohand
 
         private void Awake()
         {
+
             if (lineRenderer == null)
                 gameObject.CanGetComponent(out lineRenderer);
 
@@ -120,6 +131,7 @@ namespace Autohand
                     inputModule = system.gameObject.AddComponent<AutoInputModule>();
                     inputModule.transform.parent = AutoHandExtensions.transformParent;
                 }
+
             }
         }
 
@@ -176,6 +188,8 @@ namespace Autohand
                     lineRenderer.SetPosition(i, Vector3.Lerp(transform.position, endPosition, i/ lineSegements));
                 }
             }
+
+            
         }
 
         private RaycastHit CreateRaycast(float dist)

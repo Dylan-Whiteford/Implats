@@ -18,6 +18,7 @@ public class OpenRefuageDoor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        user = GameObject.FindGameObjectWithTag("Player");
 
         // store the original rotation the target object currently has
         initialRotation = refugeDoor.transform.rotation;

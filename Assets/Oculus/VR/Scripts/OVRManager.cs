@@ -50,6 +50,7 @@ using Node = UnityEngine.XR.XRNode;
 /// </summary>
 public class OVRManager : MonoBehaviour, OVRMixedRealityCaptureConfiguration
 {
+	
 	public enum XrApi
 	{
 		Unknown = OVRPlugin.XrApi.Unknown,
@@ -150,7 +151,11 @@ public class OVRManager : MonoBehaviour, OVRMixedRealityCaptureConfiguration
 	/// <summary>
 	/// Gets the singleton instance.
 	/// </summary>
-	public static OVRManager instance { get; private set; }
+	public static OVRManager instance { 
+		get; private set; 
+		
+		
+	}
 
 	/// <summary>
 	/// Gets a reference to the active display.
@@ -1712,9 +1717,11 @@ public class OVRManager : MonoBehaviour, OVRMixedRealityCaptureConfiguration
 		//For legacy, we should initialize OVRManager in all cases.
 		//For now, in XR SDK, only initialize if OVRPlugin is initialized.
 		InitOVRManager();
+		
 #else
 		if (OVRPlugin.initialized)
 			InitOVRManager();
+			
 #endif
 	}
 
@@ -1797,6 +1804,7 @@ public class OVRManager : MonoBehaviour, OVRMixedRealityCaptureConfiguration
 
 	void Initialize()
 	{
+		
 		if (display == null)
 			display = new OVRDisplay();
 		if (tracker == null)
