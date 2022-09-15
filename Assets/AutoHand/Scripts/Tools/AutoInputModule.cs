@@ -29,6 +29,7 @@ namespace Autohand
                         
                     }
                 }
+                _instance.transform.parent = null;
                 DontDestroyOnLoad(_instance.gameObject);
                 return _instance;
             }

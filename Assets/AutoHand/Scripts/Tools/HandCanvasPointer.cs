@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace Autohand
 {
+
     public class HandCanvasPointer : MonoBehaviour
     {
         [Header("References")]
@@ -51,7 +52,8 @@ namespace Autohand
                 cam.allowHDR = false;
                 cam.enabled = false;
                 cam.fieldOfView = 0.00001f;
-                cam.transform.parent = AutoHandExtensions.transformParent;
+                //cam.transform.parent = AutoHandExtensions.transformParent;
+                cam.transform.parent = null;
                 DontDestroyOnLoad(cam);
                 foreach (var canvas in FindObjectsOfType<Canvas>(true))
                     if(canvas.renderMode == RenderMode.WorldSpace)
@@ -70,8 +72,8 @@ namespace Autohand
 
         void OnDisable()
         {
-            // Handle the UI events
-            if(inputModule) inputModule.ProcessRelease(pointerIndex);
+            print("oi its disabled");
+            inputModule.Instance.RemovePointer(this);
         }
 
         public void SetIndex(int index)
@@ -129,9 +131,7 @@ namespace Autohand
                     inputModule.transform.parent = AutoHandExtensions.transformParent;
                 }
 
-                print("oi its not null");
             }
-            else print("oi its null"); 
         }
 
         private void Update()

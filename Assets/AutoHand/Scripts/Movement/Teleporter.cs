@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 namespace Autohand{
+
     public class Teleporter : MonoBehaviour{
         [Header("Teleport")]
         [Tooltip("The object to teleport")]
@@ -46,10 +47,10 @@ namespace Autohand{
         HandTeleportGuard[] teleportGuards;
         AutoHandPlayer playerBody;
 
-        private bool isWalking;
+        private volatile bool inTransit;
         private Vector3 targetPosition;
         private void Start() {
-
+            inTransit = false;  
             playerBody = FindObjectOfType<AutoHandPlayer>();
             print(playerBody.ToString());
             if (playerBody != null && playerBody.transform.gameObject == teleportObject){
@@ -61,26 +62,27 @@ namespace Autohand{
         }
 
         void Update(){
-            if(aiming){
-                CalculateTeleport();
-                
-                var go = LocationNodeManager.Instance.gameObject;
-                foreach (Transform trans in go.GetComponentsInChildren<Transform>(true)){
-                    trans.gameObject.layer = 15;
+            if(!inTransit){
+                if(aiming){
+                    CalculateTeleport();
+                    
+                    var go = LocationNodeManager.Instance.gameObject;
+                    foreach (Transform trans in go.GetComponentsInChildren<Transform>(true)){
+                        trans.gameObject.layer = 15;
+                    }
                 }
-            }
-            else{
-                LocationNodeManager.Instance.closeActive();
+                else{
+                    LocationNodeManager.Instance.closeActive();
 
-                var go = LocationNodeManager.Instance.gameObject;
-                foreach (Transform trans in go.GetComponentsInChildren<Transform>(true)){
-                    trans.gameObject.layer = 25;
+                    var go = LocationNodeManager.Instance.gameObject;
+                    foreach (Transform trans in go.GetComponentsInChildren<Transform>(true)){
+                        trans.gameObject.layer = 25;
+                    }
+                    line.positionCount = 0;
                 }
-                line.positionCount = 0;
+
+                DrawIndicator();
             }
-
-            DrawIndicator();
-
         }
 
         void CalculateTeleport() {
@@ -158,9 +160,11 @@ namespace Autohand{
             hitting = false;
             aiming = false;
             OnStopTeleport?.Invoke();
+            playerBody.headCamera.GetComponent<OVRScreenFade>().SetUIFade(0);
         }
 
         public void Teleport(){
+            playerBody.headCamera.GetComponent<OVRScreenFade>().SetUIFade(0);
             Queue<Vector3> fromPos = new Queue<Vector3>();
             if(teleportGuards!=null)
                 foreach(var guard in teleportGuards) {
@@ -168,7 +172,7 @@ namespace Autohand{
                         fromPos.Enqueue(guard.transform.position);
                 }
 
-            if(hitting) {
+            if(hitting && !inTransit) {
                 if (teleportObject != null){
                     var diff = aimHit.point - teleportObject.transform.position;
                     teleportObject.transform.position = aimHit.point;
@@ -180,11 +184,12 @@ namespace Autohand{
                 //===========================================DYLAN=================================================================//
 
 
+
                 LocationNodeManager.Instance.updateLastTeleport(
                     aimHit.transform.gameObject.GetComponent<LocationNode>()
                 );
                 StartCoroutine(fadeAnimation());
-
+                
                 //===========================================DYLAN=================================================================//
                 
                 OnTeleport?.Invoke();
@@ -202,17 +207,23 @@ namespace Autohand{
 
         /**
          * <summary>
-         *  - coroutine to fade animate the teleport function
+         *  coroutine to fade animate the teleport function
+         *  makes use of a couroutine lock, to only allow for one teleport at a time
          * </summary>
         **/
         private IEnumerator fadeAnimation(){
-                yield return playerBody.headCamera.GetComponent<OVRScreenFade>().Fade(0f,1f);
-                yield return new WaitForSeconds(0.35f);
-                Vector3 toPos = new Vector3(aimHit.point.x,playerBody.transform.position.y,aimHit.point.z);
-                playerBody.SetPosition(toPos);
-                yield return new WaitForSeconds(0.35f);
-                yield return playerBody.headCamera.GetComponent<OVRScreenFade>().Fade(1f,0f);
-               
+                
+                if(!inTransit){
+                    inTransit = true;
+                    yield return playerBody.headCamera.GetComponent<OVRScreenFade>().Fade(0f,1f);
+                    yield return new WaitForSeconds(0.1f);
+                    Vector3 toPos = new Vector3(aimHit.point.x,playerBody.transform.position.y,aimHit.point.z);
+                    playerBody.SetPosition(toPos);
+                    yield return new WaitForSeconds(0.1f);
+                    yield return playerBody.headCamera.GetComponent<OVRScreenFade>().Fade(1f,0f);
+                    inTransit = false;  
+                }  
+                else yield return null;
         }
     }
 }

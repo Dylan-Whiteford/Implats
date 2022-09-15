@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Autohand{
 public class SceneSelector : MonoBehaviour
 {
-
+    public HandCanvasPointer SceneMenu;
     // Singleton
     private SceneSelector Instance;
 
@@ -89,6 +89,8 @@ public class SceneSelector : MonoBehaviour
         }
 
         IEnumerator LoadYourAsyncScene(string s){
+            SceneMenu.gameObject.SetActive(false);
+
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(s); // change "YourSceneName" with the scene you want to load
 
             // wait until the scene fully loads
@@ -98,6 +100,8 @@ public class SceneSelector : MonoBehaviour
                 yield return null;
             }
 
+
+            SceneMenu.gameObject.SetActive(true);
         }   
 
     }
