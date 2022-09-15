@@ -459,12 +459,11 @@ namespace Autohand {
             transform.position = body.position;
         
             if(!ignoreIterpolationFrame) {
-                if(!isColliding){
-                    //Moves the tracked objects based on the physics bodys delta movement
-                    targetTrackedPos += (transform.position - lastUpdatePosition);
-                    var flatPos = new Vector3(targetTrackedPos.x, trackingContainer.position.y, targetTrackedPos.z);
-                    trackingContainer.position = flatPos;
-                }
+                //Moves the tracked objects based on the physics bodys delta movement
+                targetTrackedPos += (transform.position - lastUpdatePosition);
+                var flatPos = new Vector3(targetTrackedPos.x, trackingContainer.position.y, targetTrackedPos.z);
+                trackingContainer.position = flatPos;
+
 
                 //This slow moves the head + controllers on the Y-axis so it doesn't jump when stepping up
                 trackingContainer.position = Vector3.MoveTowards(trackingContainer.position, targetTrackedPos + Vector3.up * heightOffset, (Mathf.Abs(trackingContainer.position.y - targetTrackedPos.y) + 0.1f) * Time.deltaTime * heightSmoothSpeed);
