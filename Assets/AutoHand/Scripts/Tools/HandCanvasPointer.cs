@@ -63,6 +63,7 @@ namespace Autohand
 
             lineRenderer.positionCount = (int)lineSegements;
             if (inputModule.Instance != null){
+                inputModule.Instance.RemovePointer(this);
                 pointerIndex = inputModule.Instance.AddPointer(this);
             
             }

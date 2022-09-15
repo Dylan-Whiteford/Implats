@@ -444,7 +444,7 @@ namespace Autohand {
         }
 
         protected virtual bool CanInputMove() {
-            return (allowClimbingMovement || !IsClimbing());
+            return (allowClimbingMovement || !IsClimbing() );
         }
 
         protected virtual void InterpolateMovement() {
@@ -452,16 +452,19 @@ namespace Autohand {
             var startRightHandPos = handRight.transform.position;
             var startLeftHandPos = handLeft.transform.position;
 
+            
             //Smooth moves body based on velocity
             body.position = Vector3.MoveTowards(body.position, body.position + body.velocity, body.velocity.magnitude * deltaTime);
             body.velocity = Vector3.MoveTowards(body.velocity, Vector3.zero, body.velocity.magnitude * deltaTime);
             transform.position = body.position;
-
+        
             if(!ignoreIterpolationFrame) {
-                //Moves the tracked objects based on the physics bodys delta movement
-                targetTrackedPos += (transform.position - lastUpdatePosition);
-                var flatPos = new Vector3(targetTrackedPos.x, trackingContainer.position.y, targetTrackedPos.z);
-                trackingContainer.position = flatPos;
+                if(!isColliding){
+                    //Moves the tracked objects based on the physics bodys delta movement
+                    targetTrackedPos += (transform.position - lastUpdatePosition);
+                    var flatPos = new Vector3(targetTrackedPos.x, trackingContainer.position.y, targetTrackedPos.z);
+                    trackingContainer.position = flatPos;
+                }
 
                 //This slow moves the head + controllers on the Y-axis so it doesn't jump when stepping up
                 trackingContainer.position = Vector3.MoveTowards(trackingContainer.position, targetTrackedPos + Vector3.up * heightOffset, (Mathf.Abs(trackingContainer.position.y - targetTrackedPos.y) + 0.1f) * Time.deltaTime * heightSmoothSpeed);
@@ -470,6 +473,7 @@ namespace Autohand {
                 var targetPos = transform.position - headCamera.transform.position; targetPos.y = 0;
                 targetPosOffset = Vector3.MoveTowards(targetPosOffset, targetPos, body.velocity.magnitude * deltaTime * 2);
                 trackingContainer.position += targetPosOffset;
+               
 //==========================================================================================================================================================================================//
 // Altered
                 if(headPhysicsFollower != null) {

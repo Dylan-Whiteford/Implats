@@ -77,20 +77,20 @@ public class SceneSelector : MonoBehaviour
                     Scene = "Pre-Production_Waiting Area";
                 }
 
+
                 // change scene
-                activeScene = ss;
-                ahp.useGrounding=false;
                 yield return new WaitForFixedUpdate();
-                ahp.gameObject.GetComponent<Rigidbody>().useGravity = false;
                 yield return Fader.Fade(0f,1f);
-                yield return LoadYourAsyncScene(Scene ) ;
+                yield return LoadSceneAsync(Scene ) ;
                 yield return null;
             }
         }
 
-        IEnumerator LoadYourAsyncScene(string s){
-            SceneMenu.gameObject.SetActive(false);
+        IEnumerator LoadSceneAsync(string s){
 
+            activeScene = ss;
+            ahp.useGrounding=false;
+            ahp.gameObject.GetComponent<Rigidbody>().useGravity = false;
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(s); // change "YourSceneName" with the scene you want to load
 
             // wait until the scene fully loads
@@ -99,7 +99,6 @@ public class SceneSelector : MonoBehaviour
                 
                 yield return null;
             }
-
 
             SceneMenu.gameObject.SetActive(true);
         }   

@@ -164,40 +164,42 @@ namespace Autohand{
         }
 
         public void Teleport(){
-            playerBody.headCamera.GetComponent<OVRScreenFade>().SetUIFade(0);
-            Queue<Vector3> fromPos = new Queue<Vector3>();
-            if(teleportGuards!=null)
-                foreach(var guard in teleportGuards) {
-                    if(guard.gameObject.activeInHierarchy)
-                        fromPos.Enqueue(guard.transform.position);
-                }
-
-            if(hitting && !inTransit) {
-                if (teleportObject != null){
-                    var diff = aimHit.point - teleportObject.transform.position;
-                    teleportObject.transform.position = aimHit.point;
-                    foreach (var teleport in additionalTeleports){
-                        teleport.position += diff;
+            if(!inTransit){
+                playerBody.headCamera.GetComponent<OVRScreenFade>().SetUIFade(0);
+                Queue<Vector3> fromPos = new Queue<Vector3>();
+                if(teleportGuards!=null)
+                    foreach(var guard in teleportGuards) {
+                        if(guard.gameObject.activeInHierarchy)
+                            fromPos.Enqueue(guard.transform.position);
                     }
-                }
 
-                //===========================================DYLAN=================================================================//
+                if(hitting) {
+                    if (teleportObject != null){
+                        var diff = aimHit.point - teleportObject.transform.position;
+                        teleportObject.transform.position = aimHit.point;
+                        foreach (var teleport in additionalTeleports){
+                            teleport.position += diff;
+                        }
+                    }
 
-
-
-                LocationNodeManager.Instance.updateLastTeleport(
-                    aimHit.transform.gameObject.GetComponent<LocationNode>()
-                );
-                StartCoroutine(fadeAnimation());
-                
-                //===========================================DYLAN=================================================================//
-                
-                OnTeleport?.Invoke();
+                    //===========================================DYLAN=================================================================//
 
 
-                foreach(var guard in teleportGuards) {
-                    if(guard.gameObject.activeInHierarchy) {
-                        guard.TeleportProtection(fromPos.Dequeue(), guard.transform.position);
+
+                    LocationNodeManager.Instance.updateLastTeleport(
+                        aimHit.transform.gameObject.GetComponent<LocationNode>()
+                    );
+                    StartCoroutine(fadeAnimation());
+                    
+                    //===========================================DYLAN=================================================================//
+                    
+                    OnTeleport?.Invoke();
+
+
+                    foreach(var guard in teleportGuards) {
+                        if(guard.gameObject.activeInHierarchy) {
+                            guard.TeleportProtection(fromPos.Dequeue(), guard.transform.position);
+                        }
                     }
                 }
             }
@@ -213,7 +215,7 @@ namespace Autohand{
         **/
         private IEnumerator fadeAnimation(){
                 
-                if(!inTransit){
+
                     inTransit = true;
                     yield return playerBody.headCamera.GetComponent<OVRScreenFade>().Fade(0f,1f);
                     yield return new WaitForSeconds(0.1f);
@@ -222,8 +224,7 @@ namespace Autohand{
                     yield return new WaitForSeconds(0.1f);
                     yield return playerBody.headCamera.GetComponent<OVRScreenFade>().Fade(1f,0f);
                     inTransit = false;  
-                }  
-                else yield return null;
+
         }
     }
 }
