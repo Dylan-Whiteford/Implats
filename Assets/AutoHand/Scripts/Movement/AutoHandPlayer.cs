@@ -378,7 +378,7 @@ namespace Autohand {
             }
 
             //3. Moves velocity towards desired movement direction
-            if(move != Vector3.zero && CanInputMove()) {
+            if(move != Vector3.zero && CanInputMove() && !isColliding) {
                 body.velocity = Vector3.MoveTowards(body.velocity, move * maxMoveSpeed, moveAcceleration * Time.fixedDeltaTime);
             }
 

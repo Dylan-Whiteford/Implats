@@ -5,6 +5,7 @@ using Autohand;
 using Normal.Realtime;
 using System;
 using UnityEngine.SceneManagement;
+using Autohand;
 public class Player : MonoBehaviour
 {
     public static Player instance;
@@ -16,6 +17,7 @@ public class Player : MonoBehaviour
             instance = this;
             transform.parent = null;
             DontDestroyOnLoad(this.gameObject);
+            OVRManager.fixedFoveatedRenderingLevel = OVRManager.FixedFoveatedRenderingLevel.HighTop; // it's the maximum foveation level
 
         }
         else

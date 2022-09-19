@@ -4633,16 +4633,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4208751623844576601, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnRelease.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4208751623844576601, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnGrab.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4208751623844576601, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnGrab.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1599846374}
+      objectReference: {fileID: 1599846378}
     - target: {fileID: 4208751623844576601, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnRelease.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 6
@@ -4657,7 +4657,7 @@ PrefabInstance:
       objectReference: {fileID: 1599846374}
     - target: {fileID: 4208751623844576601, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnGrab.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetActive
+      value: CancelTeleport
       objectReference: {fileID: 0}
     - target: {fileID: 4208751623844576601, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnRelease.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -4669,7 +4669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4208751623844576601, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnGrab.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: Autohand.Teleporter, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4208751623844576601, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnRelease.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -4821,7 +4821,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8545606533069726036, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnGrab.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8545606533069726036, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnRelease.m_PersistentCalls.m_Calls.Array.size
@@ -4829,12 +4829,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8545606533069726036, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnGrab.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8545606533069726036, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnGrab.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1599846374}
+      objectReference: {fileID: 1599846378}
     - target: {fileID: 8545606533069726036, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnRelease.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 6
@@ -4849,7 +4849,7 @@ PrefabInstance:
       objectReference: {fileID: 1599846374}
     - target: {fileID: 8545606533069726036, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnGrab.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetActive
+      value: CancelTeleport
       objectReference: {fileID: 0}
     - target: {fileID: 8545606533069726036, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnRelease.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -4861,7 +4861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8545606533069726036, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnGrab.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: Autohand.Teleporter, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8545606533069726036, guid: 7e42f0e7e7bb50d45b5cecd824b4999d, type: 3}
       propertyPath: OnRelease.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
